@@ -1,4 +1,6 @@
 import pygame
+
+from Box import Box
 from configGame import *
 from Player import Player
 from Wall import Wall
@@ -8,12 +10,18 @@ background_image = pygame.image.load('img/ground/ground_05.png')
 backgroundWidth, backgroundHeight = background_image.get_size()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
-wall1 = Wall(100, 100)
-wall2 = Wall(400, 400)
 walls = pygame.sprite.Group()
-walls.add(wall1, wall2)
+boxes = pygame.sprite.Group()
+for i in range(len(MAP)):
+    for j in range(len(MAP[i])):
+        if MAP[i][j] == 1:
+            wall = Wall(BLOCK_SIZE*j, BLOCK_SIZE*i)
+            walls.add(wall)
+        elif MAP[i][j] == 2:
+            box = Box(BLOCK_SIZE*j, BLOCK_SIZE*i)
+            boxes.add(box)
 player = Player(walls)
-all_sprites.add(player, walls)
+all_sprites.add(player, walls, boxes)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -32,6 +40,11 @@ while True:
     if keys[pygame.K_SPACE]:
         bomb = Bomb(player.rect.center) # Создаём новую бомбу
         player.setBomb(bomb) # Попытка установить бомбу на игровом поле
+
+    for bomb in player.bombs:
+        bomb.update()
+        if not bomb.explodeRender:
+            player.bombs.remove(bomb)
 
     player.update(dx,dy)
     for x in range(0, SCREEN_WIDTH, backgroundWidth):
