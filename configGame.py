@@ -8,6 +8,7 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 RED   = (255,0,0)
 all_sprites = pygame.sprite.Group()
+walls = pygame.sprite.Group()
 MAP = [
     [0,0,2,2,0,0,0,0,2,0,0,0,0,2,2,0,0],
     [0,1,2,1,2,1,0,1,0,1,0,1,2,1,2,1,0],

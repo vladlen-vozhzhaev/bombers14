@@ -10,8 +10,7 @@ background_image = pygame.image.load('img/ground/ground_05.png')
 backgroundWidth, backgroundHeight = background_image.get_size()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
-walls = pygame.sprite.Group()
-boxes = pygame.sprite.Group()
+
 for i in range(len(MAP)):
     for j in range(len(MAP[i])):
         if MAP[i][j] == 1:
@@ -19,9 +18,9 @@ for i in range(len(MAP)):
             walls.add(wall)
         elif MAP[i][j] == 2:
             box = Box(BLOCK_SIZE*j, BLOCK_SIZE*i)
-            boxes.add(box)
+            walls.add(box)
 player = Player(walls)
-all_sprites.add(player, walls, boxes)
+all_sprites.add(player, walls)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
