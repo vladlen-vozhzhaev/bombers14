@@ -2,6 +2,7 @@ import pygame
 
 import Box
 import Wall
+import Player
 from configGame import *
 
 class Bomb(pygame.sprite.Sprite):
@@ -83,10 +84,14 @@ class Bomb(pygame.sprite.Sprite):
                 if sprite.__class__ == Box.Box:
                     all_sprites.remove(sprite)
                     walls.remove(sprite)
+                elif sprite.__class__ == Player.Player:
+                    sprite.setHp(-1)
             for sprite in y_collide:
                 if sprite.__class__ == Box.Box:
                     all_sprites.remove(sprite)
                     walls.remove(sprite)
+                elif sprite.__class__ == Player.Player:
+                    sprite.setHp(-1)
             all_sprites.add(self.explodeX, self.explodeY)
             self.exploded = True
         elif current_time - self.start_time > 3500 and self.explodeRender:

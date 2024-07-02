@@ -28,24 +28,25 @@ while True:
             exit()
     keys = pygame.key.get_pressed()
     dx, dy = 0,0
-    if keys[pygame.K_LEFT]:
-        dx = -PLAYER_SPEED
-    if keys[pygame.K_RIGHT]:
-        dx = PLAYER_SPEED
-    if keys[pygame.K_UP]:
-        dy = -PLAYER_SPEED
-    if keys[pygame.K_DOWN]:
-        dy = PLAYER_SPEED
-    if keys[pygame.K_SPACE]:
-        bomb = Bomb(player.rect.center) # Создаём новую бомбу
-        player.setBomb(bomb) # Попытка установить бомбу на игровом поле
+    if all_sprites.has(player):
+        if keys[pygame.K_LEFT]:
+            dx = -PLAYER_SPEED
+        if keys[pygame.K_RIGHT]:
+            dx = PLAYER_SPEED
+        if keys[pygame.K_UP]:
+            dy = -PLAYER_SPEED
+        if keys[pygame.K_DOWN]:
+            dy = PLAYER_SPEED
+        if keys[pygame.K_SPACE]:
+            bomb = Bomb(player.rect.center) # Создаём новую бомбу
+            player.setBomb(bomb) # Попытка установить бомбу на игровом поле
 
     for bomb in player.bombs:
         bomb.update()
         if not bomb.explodeRender:
             player.bombs.remove(bomb)
 
-    player.update(dx,dy)
+        player.update(dx,dy)
     for x in range(0, SCREEN_WIDTH, backgroundWidth):
         for y in range(0, SCREEN_HEIGHT, backgroundHeight):
             screen.blit(background_image, (x,y))
